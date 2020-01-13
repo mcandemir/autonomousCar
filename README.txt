@@ -5,4 +5,3 @@ These are protected files:
 __pycache__
 otherMedias
 imageProcessing.py
-videoProcessing.py
