@@ -19,16 +19,17 @@ class videoProcessing:
                 last = time.time() - first
                 if 0.95 < last < 1.01:
                     second += 1
-                    print(second, "second(s),", "FPS:",  frameCounter)
+                    print(second, "second(s),", "FPS:", frameCounter)
                     frameCounter = 0
                     first = time.time()
-            frameCounter = frameCounter + 1  
-            if frameCounter % servoSignalPerFrame == 0:
-                imageProcessing.servoSignal() 
-            
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-        cap.release()
-        cv2.destroyAllWindows()
+                frameCounter = frameCounter + 1  
+                if frameCounter % servoSignalPerFrame == 0:
+                    imageProcessing.servoSignal()              
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+            else:
+                print("The video is finished.")
+                cap.release()
+                cv2.destroyAllWindows()
 
 imageProcessing = imageProcessing()
