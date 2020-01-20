@@ -6,4 +6,4 @@ videoName = "RoadVideo_Trim1.mp4"
 imageProcessing = imageProcessing(imageName)
 imageProcessing.displayingScreen(imageName, imageProcessing.imageProcess())
 videoProcessing = videoProcessing(videoName)
-videoProcessing.videoProcess()
+videoProcessing.videoProcess(15)

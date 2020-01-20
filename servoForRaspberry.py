@@ -1,15 +1,15 @@
 import RPi.GPIO as GPIO
 import time
 
-class servoRP:
+class servoRPi:
   def __init__(self, pin, Hz):
     self.servoPIN = pin
     self.Hz = Hz
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(servoPIN, GPIO.OUT)
+    GPIO.setup(self.servoPIN, GPIO.OUT)
     
   def servoFunc(self):
-    p = GPIO.PWM(servoPIN, 50) # GPIO 17 for PWM with 50Hz
+    p = GPIO.PWM(self.servoPIN, 50) # GPIO 17 for PWM with 50Hz
     p.start(2.5) # Initialization
     try:
       while True:      
