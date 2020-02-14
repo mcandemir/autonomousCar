@@ -24,12 +24,12 @@ class capturingProcessing:
             if imageProcessing.slope < 0:
                 print("TURN LEFT. Degree:", imageProcessing.slope)
                 keyboard.press('a')
-                time.sleep(0.06)
+                time.sleep(0.08)
                 keyboard.release('a')
             elif imageProcessing.slope > 0:
                 print("TURN RIGHT. Degree:", imageProcessing.slope)
                 keyboard.press('d')
-                time.sleep(0.06)
+                time.sleep(0.08)
                 keyboard.release('d')
             elif imageProcessing.slope == 0:
                 print("OK. Slope:", imageProcessing.slope)
