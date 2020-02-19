@@ -11,6 +11,9 @@ class capturingProcessing:
         self.y = y
         self.w = w
         self.h = h
+        self.left = False
+        self.right= False
+        self.forward = True
 
     def capturingFunction(self):  
         time.sleep(10)
@@ -22,19 +25,31 @@ class capturingProcessing:
             imageProcessing.image = img_np
             cv2.imshow("Captured Frame", imageProcessing.imageFunction())
             if imageProcessing.slope < 0:
+                self.left = True
+                self.right = False
+                self.forward = False
+            elif imageProcessing.slope > 0:
+                self.right = True
+                self.left = False
+                self.forward = False
+            elif imageProcessing.slope == 0:
+                self.right = False
+                self.left = False
+                self.forward = True
+            if self.left == True:
+                keyboard.release('d')
                 print("TURN LEFT. Degree:", imageProcessing.slope)
                 keyboard.press('a')
-                time.sleep(0.1)
+            if self.right == True:
                 keyboard.release('a')
-            elif imageProcessing.slope > 0:
                 print("TURN RIGHT. Degree:", imageProcessing.slope)
                 keyboard.press('d')
-                time.sleep(0.1)
+            if self.forward == True:
+                keyboard.release('a')
                 keyboard.release('d')
-            elif imageProcessing.slope == 0:
                 print("OK. Slope:", imageProcessing.slope)
+            keyboard.release('w')
             if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
-            keyboard.release('w')
-
+            
 imageProcessing = imageProcessing()
