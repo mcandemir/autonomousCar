@@ -46,9 +46,3 @@ class SideCamera:
         elif avgY > int(self.image.shape[0] / 2):
             return False, False, True #F L R
         #cv2.line(canny, ( int(lineCoordinate[0]), int(lineCoordinate[1])), (int(lineCoordinate[2]), int(lineCoordinate[3])), (255, 255, 0), 8)
-        
-        
-"""
-
-sample = SideCamera(271, 210, 575, 375)
-sample.capturingFunction()"""
