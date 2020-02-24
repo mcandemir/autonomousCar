@@ -1,7 +1,6 @@
 import numpy as np
 import cv2
 import time
-from PIL import ImageGrab
 from mainCamera import MainCamera
 from sideCamera import SideCamera
 from pynput.keyboard import Key, Controller
@@ -40,7 +39,7 @@ class SimulationProcessing:
                 keyboard.release('a')
                 keyboard.release('d')
                 print("OK. Slope:")
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            if keyboard.press('q') == True:
                     break
         cv2.destroyAllWindows()
         keyboard.release('w')
