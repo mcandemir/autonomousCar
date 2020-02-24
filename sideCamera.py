@@ -34,8 +34,7 @@ class SideCamera:
         imageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
         imageProcessing.showingLines(self, self.image, 0, avgY, self.image.shape[1], avgY, 255, 255, 0)
         print(self.image.shape)
-        #imageProcessing.showingScreen(self, "Line", self.image)
-        #cv2.imshow("sad", self.image)
+        imageProcessing.showingScreen(self, "Line", self.image)
         if int(self.image.shape[0] / 2) - 5 <= avgY <= int(self.image.shape[0] / 2):
             return True, False, False #F L R
         if int(self.image.shape[0] / 2) - 5 > avgY:
