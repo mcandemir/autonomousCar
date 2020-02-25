@@ -43,4 +43,3 @@ class SimulationProcessing:
                     break
         cv2.destroyAllWindows()
         keyboard.release('w')
-                
