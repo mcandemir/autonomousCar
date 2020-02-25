@@ -29,12 +29,12 @@ class SideCamera:
             x1, y1, x2, y2 = line.reshape(4)
             sumX += (x1 + x2)
             sumY += (y1 + y2)
-        avgX = int(sumX / count)
+        #avgX = int(sumX / count)
         avgY = int(sumY / count)
         imageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
         imageProcessing.showingLines(self, self.image, 0, avgY, self.image.shape[1], avgY, 255, 255, 0)
-        print(self.image.shape)
         imageProcessing.showingScreen(self, "Line", self.image)
+        print(self.image.shape)
         if int(self.image.shape[0] / 2) - 5 <= avgY <= int(self.image.shape[0] / 2):
             return True, False, False #F L R
         if int(self.image.shape[0] / 2) - 5 > avgY:

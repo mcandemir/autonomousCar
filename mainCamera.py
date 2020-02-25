@@ -14,11 +14,11 @@ class MainCamera:
         img_np = np.array(img)
         imageProcessing.image = img_np
         imageProcessing.showingScreen("Captured Frame", imageProcessing.imageFunction())
-        if imageProcessing.slope < 0:
+        if imageProcessing.slope < -4:
             return False, True, False #F L R
-        if imageProcessing.slope > 0:
+        if imageProcessing.slope > 4:
             return False, False, True #F L R
-        if imageProcessing.slope == 0:
+        if -4 <= imageProcessing.slope <= 4:
             return True, False, False #F L R
 
 imageProcessing = imageProcessing()

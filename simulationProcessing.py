@@ -39,7 +39,7 @@ class SimulationProcessing:
                 keyboard.release('a')
                 keyboard.release('d')
                 print("OK. Slope:")
-            if keyboard.press('q') == True:
+            if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
         cv2.destroyAllWindows()
         keyboard.release('w')
