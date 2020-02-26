@@ -1,17 +1,18 @@
-from imageProcessing import imageProcessing
-from videoProcessing import videoProcessing
+from imageProcessing import ImageProcessing
+from videoProcessing import VideoProcessing
 from simulationProcessing import SimulationProcessing
+from drivingProcessing import DrivingProcessing
 
 while(True):
-    print("What do you want to do? (Image Processing:1, Simulation Processing: 2, Exit:0)")
+    print("What do you want to do? (Image & Video Processing: 1, Simulation Processing: 2, Driving: 3, Exit: 0)")
     decision = int(input())
     if decision == 1:
         imageName = "RoadPhotoWithSign.png"
         videoName = "RoadVideo_Trim1.mp4"
-        imageProcessing = imageProcessing(imageName)
+        imageProcessing = ImageProcessing(imageName)
         imageProcessing.displayingScreen(imageName, imageProcessing.imageFunction())
-        videoProcessing = videoProcessing(videoName)
-        videoProcessing.videoFunction(15)
+        videoProcessing = VideoProcessing(videoName)
+        videoProcessing.videoFunction()
     elif decision == 2:
         print("Which camera do you use in the simulation (Main Camera:1, Side Camera: 2, Exit:0)")
         camera = int(input())
@@ -25,6 +26,19 @@ while(True):
             print("Wrong input!")
             break
         simulationProcessing.simulationFunction()
+    elif decision == 3:
+        print("Which camera do you use in the driving? (Main Camera:1, Side Camera: 2, Exit:0)")
+        camera = int(input())
+        if camera == 1:
+            drivingProcessing = DrivingProcessing(1280, 720, "MainCamera")
+        elif camera == 2:
+            drivingProcessing = DrivingProcessing(1280,720, "SideCamera")
+        elif camera == 0:
+            break
+        else:
+            print("Wrong Input!")
+            break
+        drivingProcessing.drivingFunction()
     elif decision == 0:
         break
     else:

@@ -1,18 +1,18 @@
 import numpy as np
-from imageProcessing import imageProcessing
+from imageProcessing import ImageProcessing
 
 class SideCamera:
     def __init__(self, image):
-        self.image = None
+        self.image = image
         self.minX1 = None
         self.minY1 = None
         self.maxX2 = None
         self.maxY2 = None
 
     def capturingFunction(self):
-        white_image = imageProcessing.whiteDetection(self, self.image, 210, 255)
-        canny_image = imageProcessing.canny(self, white_image)
-        lines = imageProcessing.cHoughLinesP(self, canny_image, 45, 5)
+        white_image = ImageProcessing.whiteDetection(self, self.image, 210, 255)
+        canny_image = ImageProcessing.canny(self, white_image)
+        lines = ImageProcessing.cHoughLinesP(self, canny_image, 45, 5)
         count = 0
         sumX = 0
         sumY = 0
@@ -23,9 +23,9 @@ class SideCamera:
             sumY += (y1 + y2)
         #avgX = int(sumX / count)
         avgY = int(sumY / count)
-        imageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
-        imageProcessing.showingLines(self, self.image, 0, avgY, self.image.shape[1], avgY, 255, 255, 0)
-        imageProcessing.showingScreen(self, "Line", self.image)
+        ImageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
+        ImageProcessing.showingLines(self, self.image, 0, avgY, self.image.shape[1], avgY, 255, 255, 0)
+        ImageProcessing.showingScreen(self, "Line", self.image)
         print(self.image.shape)
         if int(self.image.shape[0] / 2) - 5 <= avgY <= int(self.image.shape[0] / 2):
             return True, False, False #F L R

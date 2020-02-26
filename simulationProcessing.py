@@ -28,7 +28,6 @@ class SimulationProcessing:
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
                 img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                mainCamera = MainCamera(np.array(img))
                 sideCamera = SideCamera(np.array(img))
                 self.forward, self.left, self.right = sideCamera.capturingFunction()
             if self.left == True:

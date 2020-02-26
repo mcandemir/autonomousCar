@@ -1,5 +1,5 @@
 import numpy as np
-from imageProcessing import imageProcessing
+from imageProcessing import ImageProcessing
 
 class MainCamera:
     def __init__(self, image):
@@ -15,4 +15,4 @@ class MainCamera:
         if -4 <= imageProcessing.slope <= 4:
             return True, False, False #F L R
 
-imageProcessing = imageProcessing()
+imageProcessing = ImageProcessing()
