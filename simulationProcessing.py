@@ -4,6 +4,7 @@ import time
 from mainCamera import MainCamera
 from sideCamera import SideCamera
 from pynput.keyboard import Key, Controller
+from PIL import ImageGrab
 
 class SimulationProcessing:
     def __init__(self, x, y, w, h, camera):
@@ -22,10 +23,13 @@ class SimulationProcessing:
         while(True):
             keyboard.press('w')
             if self.camera == "MainCamera":
-                mainCamera = MainCamera(self.x, self.y, self.w, self.h)
+                img = ImageGrab.grab((self.x, self.y, self.w, self.h))
+                mainCamera = MainCamera(np.array(img))
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
-                sideCamera = SideCamera(self.x, self.y, self.w, self.h)
+                img = ImageGrab.grab((self.x, self.y, self.w, self.h))
+                mainCamera = MainCamera(np.array(img))
+                sideCamera = SideCamera(np.array(img))
                 self.forward, self.left, self.right = sideCamera.capturingFunction()
             if self.left == True:
                 keyboard.release('d')

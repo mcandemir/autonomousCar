@@ -1,14 +1,8 @@
 import numpy as np
-from PIL import ImageGrab
 from imageProcessing import imageProcessing
-import cv2
 
 class SideCamera:
-    def __init__(self, x, y, w, h):
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
+    def __init__(self, image):
         self.image = None
         self.minX1 = None
         self.minY1 = None
@@ -16,8 +10,6 @@ class SideCamera:
         self.maxY2 = None
 
     def capturingFunction(self):
-        img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-        self.image = np.array(img)
         white_image = imageProcessing.whiteDetection(self, self.image, 210, 255)
         canny_image = imageProcessing.canny(self, white_image)
         lines = imageProcessing.cHoughLinesP(self, canny_image, 45, 5)

@@ -5,7 +5,7 @@ from simulationProcessing import SimulationProcessing
 while(True):
     print("What do you want to do? (Image Processing:1, Simulation Processing: 2, Exit:0)")
     decision = int(input())
-    if decision == 1:    
+    if decision == 1:
         imageName = "RoadPhotoWithSign.png"
         videoName = "RoadVideo_Trim1.mp4"
         imageProcessing = imageProcessing(imageName)
