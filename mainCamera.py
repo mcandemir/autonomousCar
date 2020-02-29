@@ -7,6 +7,7 @@ class MainCamera:
 
     def capturingFunction(self):
         imageProcessing.image = self.image
+        print(np.array(self.image).shape)
         imageProcessing.showingScreen("Captured Frame", imageProcessing.imageFunction())
         if imageProcessing.slope < -4:
             return False, True, False #F L R

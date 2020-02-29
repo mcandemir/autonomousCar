@@ -32,7 +32,7 @@ while(True):
         if camera == 1:
             drivingProcessing = DrivingProcessing(1280, 720, "MainCamera")
         elif camera == 2:
-            drivingProcessing = DrivingProcessing(1280,720, "SideCamera")
+            drivingProcessing = DrivingProcessing(1280, 720, "SideCamera")
         elif camera == 0:
             break
         else:
