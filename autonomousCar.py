@@ -20,6 +20,7 @@ while(True):
             simulationProcessing = SimulationProcessing(225, 207, 1400, 900, "MainCamera")
         elif camera == 2:
             simulationProcessing = SimulationProcessing(271, 210, 575, 375, "SideCamera")
+            #simulationProcessing = SimulationProcessing(1120, 240, 1420, 390, "SideCamera")
         elif camera == 0:
             break
         else:

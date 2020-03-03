@@ -12,6 +12,7 @@ class DrivingProcessing:
         self.left = False
         self.right = False
         self.forward = True
+        self.error = False
 
     def drivingFunction(self):
         cap = cv2.VideoCapture(1)
@@ -24,16 +25,19 @@ class DrivingProcessing:
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
                 sideCamera = SideCamera(np.array(frame))
-                self.forward, self.left, self.right = sideCamera.capturingFunction()
+                self.forward, self.left, self.right, self.error = sideCamera.capturingFunction()
             else:
                 print("Wrong Camera Name!")
                 break
-            if self.left == True:
-                print("TURN LEFT.")
-            if self.right == True:
-                print("TURN RIGHT.")
-            if self.forward == True:
-                print("OK. Slope:")
+            if self.error is not True:
+                if self.left == True:
+                    print("TURN LEFT.")
+                elif self.right == True:
+                    print("TURN RIGHT.")
+                elif self.forward == True:
+                    print("OK. Slope:")
+            else:
+                print("No lane detected.")
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 

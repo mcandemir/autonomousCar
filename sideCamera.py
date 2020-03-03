@@ -16,20 +16,23 @@ class SideCamera:
         count = 0
         sumX = 0
         sumY = 0
-        for line in lines:
-            count += 2
-            x1, y1, x2, y2 = line.reshape(4)
-            sumX += (x1 + x2)
-            sumY += (y1 + y2)
-        #avgX = int(sumX / count)
-        avgY = int(sumY / count)
-        ImageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
-        ImageProcessing.showingLines(self, self.image, 0, avgY, self.image.shape[1], avgY, 255, 255, 0)
-        ImageProcessing.showingScreen(self, "Line", self.image)
-        print(self.image.shape)
-        if int(self.image.shape[0] / 2) - 5 <= avgY <= int(self.image.shape[0] / 2):
-            return True, False, False #F L R
-        if int(self.image.shape[0] / 2) - 5 > avgY:
-            return False, True, False #F L R
-        if avgY > int(self.image.shape[0] / 2):
-            return False, False, True #F L R
+        if lines is not None:
+            for line in lines:
+                count += 2
+                x1, y1, x2, y2 = line.reshape(4)
+                sumX += (x1 + x2)
+                sumY += (y1 + y2)
+            #avgX = int(sumX / count)
+            avgY = int(sumY / count)
+            ImageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
+            ImageProcessing.showingLines(self, self.image, 0, avgY, self.image.shape[1], avgY, 255, 255, 0)
+            ImageProcessing.showingScreen(self, "Line", self.image)
+            print(self.image.shape)
+            if int(self.image.shape[0] / 2) - 5 <= avgY <= int(self.image.shape[0] / 2):
+                return True, False, False, False #F L R E
+            if int(self.image.shape[0] / 2) - 5 > avgY:
+                return False, True, False, False #F L R E
+            if avgY > int(self.image.shape[0] / 2):
+                return False, False, True, False #F L R E
+        else:
+            return  False, False, False, True #F L R E
