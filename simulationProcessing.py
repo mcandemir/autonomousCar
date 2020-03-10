@@ -3,20 +3,27 @@ import cv2
 import time
 from mainCamera import MainCamera
 from sideCamera import SideCamera
+from rightSideCamera import RightSideCamera
 from pynput.keyboard import Key, Controller
 from PIL import ImageGrab
 
 class SimulationProcessing:
-    def __init__(self, x, y, w, h, camera):
+    def __init__(self, x, y, w, h, camera,xR,yR,wR,hR):
         self.x = x
         self.y = y
         self.w = w
         self.h = h
+        self.xR = xR
+        self.yR = yR
+        self.wR = wR
+        self.hR = hR
         self.camera = camera
         self.left = False
         self.right = False
         self.forward = True
-        self.error = False
+        self.errorLeft = False
+        self.errorRight = False
+        self.activity = "None"
 
     def simulationFunction(self):
         keyboard = Controller()
@@ -29,7 +36,21 @@ class SimulationProcessing:
             elif self.camera == "SideCamera":
                 img = ImageGrab.grab((self.x, self.y, self.w, self.h))
                 sideCamera = SideCamera(np.array(img))
-                self.forward, self.left, self.right,self.error = sideCamera.capturingFunction()
+                self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
+                if self.errorLeft is False:
+                    img = ImageGrab.grab((self.x, self.y, self.w, self.h))
+                    sideCamera = SideCamera(np.array(img))
+                    self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
+                else:
+                    img1 = ImageGrab.grab((self.xR, self.yR, self.wR, self.hR))
+                    rightSideCamera = RightSideCamera(np.array(img1))
+                    self.forward, self.left, self.right, self.errorRight = rightSideCamera.capturingFunction()
+                if self.errorLeft and self.errorRight is True:
+                    self.activity = "None"
+                elif self.errorLeft is False and self.errorRight is not True:
+                    self.activity = "Left"
+                else:
+                    self.activity = "Right"
             if self.camera is "MainCamera":
                 keyboard.press('w')
                 if self.left == True:
@@ -45,7 +66,7 @@ class SimulationProcessing:
                     keyboard.release('d')
                     print("OK. Slope:")
             elif self.camera is "SideCamera":
-                if self.error is True:
+                if self.activity is "None":
                     keyboard.release('w')
                     keyboard.release('a')
                     keyboard.release('d')
