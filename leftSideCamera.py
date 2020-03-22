@@ -1,7 +1,7 @@
 import numpy as np
 from imageProcessing import ImageProcessing
 
-class SideCamera:
+class LeftSideCamera:
     def __init__(self, image):
         self.image = image
         self.minX1 = None

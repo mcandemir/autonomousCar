@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import time
 from mainCamera import MainCamera
-from sideCamera import SideCamera
+from leftSideCamera import LeftSideCamera
 from rightSideCamera import RightSideCamera
 from pynput.keyboard import Key, Controller
 from PIL import ImageGrab
@@ -35,11 +35,12 @@ class SimulationProcessing:
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
                 img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                sideCamera = SideCamera(np.array(img))
+                sideCamera = LeftSideCamera(np.array(img))
                 self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
+                print(self.errorLeft)
                 if self.errorLeft is False:
                     img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                    sideCamera = SideCamera(np.array(img))
+                    sideCamera = LeftSideCamera(np.array(img))
                     self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
                 else:
                     img1 = ImageGrab.grab((self.xR, self.yR, self.wR, self.hR))

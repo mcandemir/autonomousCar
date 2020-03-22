@@ -1,7 +1,6 @@
-import numpy as np
 import cv2
 from mainCamera import MainCamera
-from sideCamera import SideCamera
+from leftSideCamera import LeftSideCamera
 from rightSideCamera import RightSideCamera
 import time
 
@@ -25,7 +24,7 @@ class DrivingProcessing:
                 mainCamera = MainCamera(np.array(frame))
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
-                sideCamera = SideCamera(np.array(frame))
+                sideCamera = LeftSideCamera(np.array(frame))
                 self.forward, self.left, self.right, self.error = sideCamera.capturingFunction()
             else:
                 print("Wrong Camera Name!")
