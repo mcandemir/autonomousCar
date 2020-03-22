@@ -1,3 +1,4 @@
+import numpy as np
 from imageProcessing import ImageProcessing
 
 class RightSideCamera:
