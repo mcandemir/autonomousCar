@@ -17,7 +17,7 @@ while(True):
         print("Which camera do you use in the simulation (Main Camera:1, Side Camera: 2, Exit:0)")
         camera = int(input())
         if camera == 1:
-            simulationProcessing = SimulationProcessing(225, 207, 1400, 900, "MainCamera")
+            simulationProcessing = SimulationProcessing(225, 207, 1400, 900, "MainCamera", 1160, 240, 1465, 390)
         elif camera == 2:
             simulationProcessing = SimulationProcessing(271, 210, 575, 375, "SideCamera",1160, 240, 1465, 390)
         elif camera == 0:
