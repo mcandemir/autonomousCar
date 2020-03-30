@@ -37,7 +37,6 @@ class SimulationProcessing:
                 img = ImageGrab.grab((self.x, self.y, self.w, self.h))
                 sideCamera = LeftSideCamera(np.array(img))
                 self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
-                print(self.errorLeft)
                 if self.errorLeft is False:
                     img = ImageGrab.grab((self.x, self.y, self.w, self.h))
                     sideCamera = LeftSideCamera(np.array(img))
@@ -65,7 +64,7 @@ class SimulationProcessing:
                 if self.forward == True:
                     keyboard.release('a')
                     keyboard.release('d')
-                    print("OK. Slope:")
+                    print("OK Slope")
             elif self.camera is "SideCamera":
                 if self.activity is "None":
                     keyboard.release('w')
@@ -85,7 +84,7 @@ class SimulationProcessing:
                     if self.forward == True:
                         keyboard.release('a')
                         keyboard.release('d')
-                        print("OK. Slope:")
+                        print("OK Slope.")
             if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
         cv2.destroyAllWindows()
