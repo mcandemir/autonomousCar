@@ -245,6 +245,6 @@ class GUI(QMainWindow):
                 print("Choose Camera!!!")
 
 app = QApplication(sys.argv)
-sampleWindow = GUI(100, 100, 900, 225, "Autonomous Car")
-sampleWindow.show()
+win = GUI(100, 100, 900, 225, "Autonomous Car")
+win.show()
 sys.exit(app.exec_())
