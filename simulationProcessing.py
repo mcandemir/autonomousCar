@@ -5,15 +5,16 @@ from mainCamera import MainCamera
 from leftSideCamera import LeftSideCamera
 from rightSideCamera import RightSideCamera
 from pynput.keyboard import Key, Controller
+from pynput.mouse import Controller as MouseController
 from PIL import ImageGrab
 import pyautogui
 
 class SimulationProcessing:
-    def __init__(self, x, y, w, h, camera,xR,yR,wR,hR):
-        self.x = x
-        self.y = y
-        self.w = w
-        self.h = h
+    def __init__(self, camera, xR, yR, wR, hR):
+        self.x = None
+        self.y = None
+        self.w = None
+        self.h = None
         self.xR = xR
         self.yR = yR
         self.wR = wR
@@ -26,9 +27,21 @@ class SimulationProcessing:
         self.errorRight = False
         self.activity = "None"
 
-    def simulationFunction(self):
-        keyboard = Controller()
+
+    def gettingMouseAxis(self):
         time.sleep(5)
+        mouse = MouseController()
+        x, y = mouse.position
+        self.x = int(x)
+        self.y = int(y)
+        time.sleep(5)
+        x, y = mouse.position
+        self.w = int(x)
+        self.h = int(y)
+
+    def simulationFunction(self):
+        self.gettingMouseAxis()
+        keyboard = Controller()
         while(True):
             img = ImageGrab.grab((self.x, self.y, self.w, self.h))
             if self.camera == "MainCamera":
