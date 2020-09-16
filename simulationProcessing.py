@@ -6,6 +6,7 @@ from leftSideCamera import LeftSideCamera
 from rightSideCamera import RightSideCamera
 from pynput.keyboard import Key, Controller
 from PIL import ImageGrab
+import pyautogui
 
 class SimulationProcessing:
     def __init__(self, x, y, w, h, camera,xR,yR,wR,hR):
@@ -29,16 +30,14 @@ class SimulationProcessing:
         keyboard = Controller()
         time.sleep(5)
         while(True):
+            img = ImageGrab.grab((self.x, self.y, self.w, self.h))
             if self.camera == "MainCamera":
-                img = ImageGrab.grab((self.x, self.y, self.w, self.h))
                 mainCamera = MainCamera(np.array(img))
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
-                img = ImageGrab.grab((self.x, self.y, self.w, self.h))
                 sideCamera = LeftSideCamera(np.array(img))
                 self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
                 if self.errorLeft is False:
-                    img = ImageGrab.grab((self.x, self.y, self.w, self.h))
                     sideCamera = LeftSideCamera(np.array(img))
                     self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
                 else:
@@ -51,7 +50,7 @@ class SimulationProcessing:
                     self.activity = "Left"
                 else:
                     self.activity = "Right"
-            if self.camera is "MainCamera":
+            if self.camera == "MainCamera":
                 keyboard.press('w')
                 if self.left == True:
                     keyboard.release('d')
@@ -65,8 +64,8 @@ class SimulationProcessing:
                     keyboard.release('a')
                     keyboard.release('d')
                     print("OK Slope")
-            elif self.camera is "SideCamera":
-                if self.activity is "None":
+            elif self.camera == "SideCamera":
+                if self.activity == "None":
                     keyboard.release('w')
                     keyboard.release('a')
                     keyboard.release('d')

@@ -1,5 +1,6 @@
 import numpy as np
 from imageProcessing import ImageProcessing
+import cv2
 
 class RightSideCamera:
     def __init__(self, image):
@@ -27,6 +28,7 @@ class RightSideCamera:
             ImageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
             ImageProcessing.showingLines(self, self.image, 0, avgY, self.image.shape[1], avgY, 255, 255, 0)
             ImageProcessing.showingScreen(self, "Right Line", self.image)
+            cv2.imshow("Right Line", self.image)
             if int(self.image.shape[0] / 2) - 5 <= avgY <= int(self.image.shape[0] / 2) + 5:
                 return True, False, False, False #F L R E
             if int(self.image.shape[0] / 2) - 5 > avgY:
