@@ -13,12 +13,12 @@ class SimulationProcessing:
     def __init__(self, camera, xR, yR, wR, hR):
         self.x = None
         self.y = None
-        self.w = None
-        self.h = None
+        self.x2 = None
+        self.y2 = None
         self.xR = xR
         self.yR = yR
-        self.wR = wR
-        self.hR = hR
+        self.x2R = wR
+        self.y2R = hR
         self.camera = camera
         self.left = False
         self.right = False
@@ -27,23 +27,36 @@ class SimulationProcessing:
         self.errorRight = False
         self.activity = "None"
 
-
     def gettingMouseAxis(self):
-        time.sleep(5)
-        mouse = MouseController()
-        x, y = mouse.position
-        self.x = int(x)
-        self.y = int(y)
-        time.sleep(5)
-        x, y = mouse.position
-        self.w = int(x)
-        self.h = int(y)
+            print("Proceeding...")
+            print("Point the left top corner of the left camera")
+            time.sleep(5)
+            mouse = MouseController()
+            x, y = mouse.position
+            self.x = int(x)
+            self.y = int(y)
+            print("Point the right bottom corner of the left camera")
+            time.sleep(3)
+            x, y = mouse.position
+            self.x2 = int(x)
+            self.y2 = int(y)
+            print("Point the left top corner of the right camera")
+            time.sleep(3)
+            x, y = mouse.position
+            self.xR = int(x)
+            self.yR = int(y)
+            print("Point the right bottom corner of the right camera")
+            time.sleep(3)
+            x, y = mouse.position
+            self.x2R = int(x)
+            self.y2R = int(y)
+            print("All done!")
 
     def simulationFunction(self):
         self.gettingMouseAxis()
         keyboard = Controller()
         while(True):
-            img = ImageGrab.grab((self.x, self.y, self.w, self.h))
+            img = ImageGrab.grab((self.x, self.y, self.x2, self.y2))
             if self.camera == "MainCamera":
                 mainCamera = MainCamera(np.array(img))
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
@@ -54,7 +67,7 @@ class SimulationProcessing:
                     sideCamera = LeftSideCamera(np.array(img))
                     self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
                 else:
-                    img1 = ImageGrab.grab((self.xR, self.yR, self.wR, self.hR))
+                    img1 = ImageGrab.grab((self.xR, self.yR, self.x2R, self.y2R))
                     rightSideCamera = RightSideCamera(np.array(img1))
                     self.forward, self.left, self.right, self.errorRight = rightSideCamera.capturingFunction()
                 if self.errorLeft and self.errorRight is True:
