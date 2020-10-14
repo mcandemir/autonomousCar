@@ -14,15 +14,8 @@ class LeftSideCamera:
         white_image = ImageProcessing.whiteDetection(self, self.image, 210, 255)
         canny_image = ImageProcessing.canny(self, white_image)
         lines = ImageProcessing.cHoughLinesP(self, canny_image, 45, 5)
-        count = 0
-        sumX = 0
-        sumY = 0
         if lines is not None:
-            for line in lines:
-                count += 2
-                x1, y1, x2, y2 = line.reshape(4)
-                sumX += (x1 + x2)
-                sumY += (y1 + y2)
+            sumX, sumY, count = ImageProcessing.sideCamLines(self, lines)
             #avgX = int(sumX / count)
             avgY = int(sumY / count)
             ImageProcessing.showingLines(self, self.image, 0, int(self.image.shape[0] / 2), self.image.shape[1], int(self.image.shape[0] / 2), 255, 0, 0)
