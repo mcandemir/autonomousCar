@@ -253,8 +253,8 @@ while(True):
     print("What do you want to do? (Image & Video Processing: 1, Simulation Processing: 2, Driving: 3, Exit: 0)")
     decision = int(input())
     if decision == 1:
-        imageName = "RoadPhotoWithSign.png"
-        videoName = "RoadVideo_Trim1.mp4"
+        imageName = "resources/RoadPhotoWithSign.png"
+        videoName = "resources/RoadVideo_Trim1.mp4"
         imageProcessing = ImageProcessing(imageName)
         imageProcessing.displayingScreen(imageName, imageProcessing.imageFunction())
         videoProcessing = VideoProcessing(videoName)
