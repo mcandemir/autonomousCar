@@ -8,17 +8,13 @@ from pynput.keyboard import Key, Controller
 from pynput.mouse import Controller as MouseController
 from PIL import ImageGrab
 import pyautogui
+from SetScreen import set_pos
 
 class SimulationProcessing:
     def __init__(self, camera, xR, yR, wR, hR):
-        self.x = None
-        self.y = None
-        self.x2 = None
-        self.y2 = None
-        self.xR = xR
-        self.yR = yR
-        self.x2R = wR
-        self.y2R = hR
+        self.x, self.y, self.x2, self.y2 = None, None, None, None
+        self.xR, self.yR, self.x2R, self.y2R = xR, yR, wR, hR
+        self.xF, self.yF, self.x2F, self.y2F = None, None, None, None
         self.camera = camera
         self.left = False
         self.right = False
@@ -29,27 +25,11 @@ class SimulationProcessing:
 
     def gettingMouseAxis(self):
             print("Proceeding...")
-            print("Point the left top corner of the left camera")
-            time.sleep(5)
-            mouse = MouseController()
-            x, y = mouse.position
-            self.x = int(x)
-            self.y = int(y)
-            print("Point the right bottom corner of the left camera")
-            time.sleep(3)
-            x, y = mouse.position
-            self.x2 = int(x)
-            self.y2 = int(y)
-            print("Point the left top corner of the right camera")
-            time.sleep(3)
-            x, y = mouse.position
-            self.xR = int(x)
-            self.yR = int(y)
-            print("Point the right bottom corner of the right camera")
-            time.sleep(3)
-            x, y = mouse.position
-            self.x2R = int(x)
-            self.y2R = int(y)
+            if self.camera == "MainCamera":
+                self.x, self.y, self.x2, self.y2 = set_pos()
+            elif self.camera == "SideCamera":
+                self.xR, self.yR, self.x2R, self.y2R = set_pos()
+                self.xF, self.yF, self.x2F, self.y2F = set_pos()
             print("All done!")
 
     def simulationFunction(self):
