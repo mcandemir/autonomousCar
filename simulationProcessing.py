@@ -28,6 +28,7 @@ class SimulationProcessing:
             if self.camera == "MainCamera":
                 self.x, self.y, self.x2, self.y2 = set_pos()
             elif self.camera == "SideCamera":
+                self.x, self.y, self.x2, self.y2 = set_pos()
                 self.xR, self.yR, self.x2R, self.y2R = set_pos()
                 self.xF, self.yF, self.x2F, self.y2F = set_pos()
             print("All done!")
