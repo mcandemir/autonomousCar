@@ -14,7 +14,6 @@ class SimulationProcessing:
     def __init__(self, camera, xR, yR, wR, hR):
         self.x, self.y, self.x2, self.y2 = None, None, None, None
         self.xR, self.yR, self.x2R, self.y2R = xR, yR, wR, hR
-        self.xF, self.yF, self.x2F, self.y2F = None, None, None, None
         self.camera = camera
         self.left = False
         self.right = False
@@ -30,7 +29,6 @@ class SimulationProcessing:
             elif self.camera == "SideCamera":
                 self.x, self.y, self.x2, self.y2 = set_pos()
                 self.xR, self.yR, self.x2R, self.y2R = set_pos()
-                self.xF, self.yF, self.x2F, self.y2F = set_pos()
             print("All done!")
 
     def simulationFunction(self):
