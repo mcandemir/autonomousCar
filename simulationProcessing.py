@@ -9,6 +9,7 @@ from pynput.mouse import Controller as MouseController
 from PIL import ImageGrab
 import pyautogui
 from SetScreen import set_pos
+from FrontCam import FrontCam
 
 class SimulationProcessing:
     def __init__(self, camera, xR, yR, wR, hR):
@@ -22,6 +23,7 @@ class SimulationProcessing:
         self.errorLeft = False
         self.errorRight = False
         self.activity = "None"
+        self.frontCam = FrontCam()
 
     def gettingMouseAxis(self):
             print("Proceeding...")
@@ -43,6 +45,7 @@ class SimulationProcessing:
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
                 sideCamera = LeftSideCamera(np.array(img))
+                self.frontCam.process(np.array(ImageGrab.grab((self.xF, self.yF, self.x2F, self.y2F))))
                 self.forward, self.left, self.right,self.errorLeft = sideCamera.capturingFunction()
                 if self.errorLeft is False:
                     sideCamera = LeftSideCamera(np.array(img))

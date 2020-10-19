@@ -1,0 +1,9 @@
+{
+  "traffic_light": "signs/traffic_light.png",
+  "stop": "signs/stop.png",
+  "durak": "signs/durak.png",
+  "left_turn": "signs/left_turn.png",
+  "right_turn": "signs/right_turn.png",
+  "no_left_turn": "signs/no_left_turn.png",
+  "right_or_straight": "signs/right_or_straight.png"
+}

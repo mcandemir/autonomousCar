@@ -2,8 +2,8 @@ from imageProcessing import ImageProcessing
 from videoProcessing import VideoProcessing
 from simulationProcessing import SimulationProcessing
 from drivingProcessing import DrivingProcessing
-from PyQt5 import QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication, QComboBox, QFileDialog, QLineEdit, QMainWindow
+# from PyQt5 import QtGui, QtWidgets
+# from PyQt5.QtWidgets import QApplication, QComboBox, QFileDialog, QLineEdit, QMainWindow
 import sys
 """
 class GUI(QMainWindow):
