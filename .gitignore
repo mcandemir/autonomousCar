@@ -1,4 +1,6 @@
 imageProcessing.py
+securityProcessing.py
+motorProcessing.py
 .vscode
 __pycache__
 otherMedias
