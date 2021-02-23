@@ -3,6 +3,7 @@ import cv2
 import time
 from trafficSignProcessing import TrafficSign
 from imageProcessing import ImageProcessing
+#from securityProcessing import SecurityProcessing
 from mainCamera import MainCamera
 from leftSideCamera import LeftSideCamera
 from rightSideCamera import RightSideCamera
@@ -24,6 +25,7 @@ class SimulationProcessing:
         self.frameCount = 0
         self.Left_avgY = -1
         self.Right_avgY = -1
+        self.wholeScreenArr = None
         #-------------------------
         self.leftLaneCheck = [1,1,1]
         self.rightLaneCheck = [1,1,1]
@@ -70,6 +72,7 @@ class SimulationProcessing:
                     return pos
 
     def set_pos(self):
+        """
         print('\n*Select first corner of the left cam')
         mouse_posX1, mouse_posY1 = self.click_coordinates()
         time.sleep(0.8)
@@ -103,6 +106,24 @@ class SimulationProcessing:
         self.wSigns = int(mouse_posX2)
         self.hSigns = int(mouse_posY2)
         print("Third area has been set!")
+        """
+        print("Set the area to process")
+        print("Upper corner")
+        mouse_posX1, mouse_posY1 = self.click_coordinates()
+        print("Lower corner")
+        time.sleep(0.8)
+        mouse_posX2, mouse_posY2 = self.click_coordinates()
+        self.x = int(mouse_posX1)
+        self.y = int(mouse_posY1)
+        self.w = int(mouse_posX2)
+        self.h = int(mouse_posY2)
+        wholeScreen = ImageGrab.grab((self.x, self.y, self.w, self.h))
+        self.wholeScreenArr = np.array(wholeScreen)
+        print(int(np.size(self.wholeScreenArr, 0)))
+        cv2.imshow("sdf", wholeScreen)
+        
+        time.sleep(10)
+
             
 
     def simulationFunction(self):
@@ -118,19 +139,20 @@ class SimulationProcessing:
                 mainCamera = MainCamera(np.array(img))
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
-                
-                img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                sideCamera = LeftSideCamera(np.array(img))
+                #img = ImageGrab.grab((self.x, self.y, self.w, self.h))
+                leftLineImg = self.wholeScreenArr[0 : int(np.size(self.wholeScreenArr, 0) * 0.25), int(np.size(self.wholeScreenArr, 1)):int(np.size(self.wholeScreenArr, 1) * 0.25)]
+                sideCamera = LeftSideCamera(np.array(leftLineImg))
                 self.forward, self.left, self.right,self.errorLeft, self.Left_avgY = sideCamera.capturingFunction()
                 #bu verilerle asagıdakiler çakışıyor(rightSideCamera'nın fonksiyonundan atanan degerler, 4 satır aşağısı) o yüzden bunları değişkende tutacagız
                 t_forward, t_left, t_right = self.forward, self.left, self.right
-                img1 = ImageGrab.grab((self.xR, self.yR, self.wR, self.hR))
-                rightSideCamera = RightSideCamera(np.array(img1))
+                #img1 = ImageGrab.grab((self.xR, self.yR, self.wR, self.hR))
+                rightLineImg = self.wholeScreenArr[0 : int(np.size(self.wholeScreenArr, 0) * 0.25), int(np.size(self.wholeScreenArr, 1) * 0.75) : int(np.size(self.wholeScreenArr, 1))]
+                rightSideCamera = RightSideCamera(np.array(rightLineImg))
                 self.forward, self.left, self.right, self.errorRight, self.Right_avgY = rightSideCamera.capturingFunction()
                 
-                signs_img = ImageGrab.grab((self.xSigns,self.ySigns,self.wSigns,self.hSigns))
-                signs_img = np.array(signs_img)
-                points = self.gettingTrafficSignsUICoordinates(signs_img)
+                signsImg = self.wholeScreenArr[int(np.size(self.wholeScreenArr, 0) * 0.79) : int(np.size(self.wholeScreenArr, 0) * 0.95), int(np.size(self.wholeScreenArr, 1) * 0.13) : int(np.size(self.wholeScreenArr, 1) * 0.89)]
+                signsImg = np.array(signsImg)
+                points = self.gettingTrafficSignsUICoordinates(signsImg)
 
                 if self.errorLeft is False:
                     self.leftLaneCheck[self.frameCount%3] = 1
