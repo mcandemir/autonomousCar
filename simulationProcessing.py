@@ -25,7 +25,6 @@ class SimulationProcessing:
         self.frameCount = 0
         self.Left_avgY = -1
         self.Right_avgY = -1
-        self.wholeScreenArr = None
         #-------------------------
         self.leftLaneCheck = [1,1,1]
         self.rightLaneCheck = [1,1,1]
@@ -117,12 +116,6 @@ class SimulationProcessing:
         self.y = int(mouse_posY1)
         self.w = int(mouse_posX2)
         self.h = int(mouse_posY2)
-        wholeScreen = ImageGrab.grab((self.x, self.y, self.w, self.h))
-        self.wholeScreenArr = np.array(wholeScreen)
-        print(int(np.size(self.wholeScreenArr, 0)))
-        cv2.imshow("sdf", wholeScreen)
-        
-        time.sleep(10)
 
             
 
@@ -140,17 +133,19 @@ class SimulationProcessing:
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
                 #img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                leftLineImg = self.wholeScreenArr[0 : int(np.size(self.wholeScreenArr, 0) * 0.25), int(np.size(self.wholeScreenArr, 1)):int(np.size(self.wholeScreenArr, 1) * 0.25)]
+                
+                wholeScreen = ImageGrab.grab((self.x, self.y, self.w, self.h))
+                leftLineImg = wholeScreen.crop((0, 0, wholeScreen.size[0] / 4, wholeScreen.size[1] / 4))
                 sideCamera = LeftSideCamera(np.array(leftLineImg))
                 self.forward, self.left, self.right,self.errorLeft, self.Left_avgY = sideCamera.capturingFunction()
                 #bu verilerle asagıdakiler çakışıyor(rightSideCamera'nın fonksiyonundan atanan degerler, 4 satır aşağısı) o yüzden bunları değişkende tutacagız
                 t_forward, t_left, t_right = self.forward, self.left, self.right
                 #img1 = ImageGrab.grab((self.xR, self.yR, self.wR, self.hR))
-                rightLineImg = self.wholeScreenArr[0 : int(np.size(self.wholeScreenArr, 0) * 0.25), int(np.size(self.wholeScreenArr, 1) * 0.75) : int(np.size(self.wholeScreenArr, 1))]
+                rightLineImg = wholeScreen.crop((3 * (wholeScreen.size[0]) / 4, 0, wholeScreen.size[0], wholeScreen.size[1] / 4))
                 rightSideCamera = RightSideCamera(np.array(rightLineImg))
                 self.forward, self.left, self.right, self.errorRight, self.Right_avgY = rightSideCamera.capturingFunction()
                 
-                signsImg = self.wholeScreenArr[int(np.size(self.wholeScreenArr, 0) * 0.79) : int(np.size(self.wholeScreenArr, 0) * 0.95), int(np.size(self.wholeScreenArr, 1) * 0.13) : int(np.size(self.wholeScreenArr, 1) * 0.89)]
+                signsImg = wholeScreen.crop((13 * (wholeScreen.size[0]) / 100, 29 * (wholeScreen.size[1]) / 100, 89 * (wholeScreen.size[0]) / 100, 95 * (wholeScreen.size[1]) / 100))
                 signsImg = np.array(signsImg)
                 points = self.gettingTrafficSignsUICoordinates(signsImg)
 
@@ -204,7 +199,7 @@ class SimulationProcessing:
                 
                 greenColorRGB = [86,188,106]
                 redColorRGB = [255,0,0]
-                self.controllingTrafficSignStatus(trafficSign, signs_img, points, greenColorRGB, redColorRGB)
+                self.controllingTrafficSignStatus(trafficSign, signsImg, points, greenColorRGB, redColorRGB)
                 trafficSign.printingAllSigns()
 
                 if trafficSign.trafficLightStatus() == -1 or trafficSign.trafficLightStatus() == 1:
