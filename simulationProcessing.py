@@ -3,7 +3,7 @@ import cv2
 import time
 from trafficSignProcessing import TrafficSign
 from imageProcessing import ImageProcessing
-#from securityProcessing import SecurityProcessing
+from securityProcessing import SecurityProcessing
 from mainCamera import MainCamera
 from leftSideCamera import LeftSideCamera
 from rightSideCamera import RightSideCamera
@@ -71,41 +71,6 @@ class SimulationProcessing:
                     return pos
 
     def set_pos(self):
-        """
-        print('\n*Select first corner of the left cam')
-        mouse_posX1, mouse_posY1 = self.click_coordinates()
-        time.sleep(0.8)
-        print('\n*Select second corner of the left cam')
-        mouse_posX2, mouse_posY2 = self.click_coordinates()
-        time.sleep(0.8)
-        self.x = int(mouse_posX1)
-        self.y = int(mouse_posY1)
-        self.w = int(mouse_posX2)
-        self.h = int(mouse_posY2)
-        print("First area has been set!")
-        print('\n*Select first corner of the right cam')
-        mouse_posX1, mouse_posY1 = self.click_coordinates()
-        time.sleep(0.8)
-        print('\n*Select second corner of the right cam')
-        mouse_posX2, mouse_posY2 = self.click_coordinates()
-        time.sleep(0.8)
-        self.xR = int(mouse_posX1)
-        self.yR = int(mouse_posY1)
-        self.wR = int(mouse_posX2)
-        self.hR = int(mouse_posY2)
-        print("Second area has been set!")
-        print('\n*Select first corner of the area of traffic signs')
-        mouse_posX1, mouse_posY1 = self.click_coordinates()
-        time.sleep(0.8)
-        print('\n*Select second corner of the area of traffic signs')
-        mouse_posX2, mouse_posY2 = self.click_coordinates()
-        time.sleep(0.8)
-        self.xSigns = int(mouse_posX1)
-        self.ySigns = int(mouse_posY1)
-        self.wSigns = int(mouse_posX2)
-        self.hSigns = int(mouse_posY2)
-        print("Third area has been set!")
-        """
         print("Set the area to process")
         print("Upper corner")
         mouse_posX1, mouse_posY1 = self.click_coordinates()
@@ -124,30 +89,31 @@ class SimulationProcessing:
         trafficSign = TrafficSign()
         avgOfCams = int((self.h - self.y)/2)
         keyboard = Controller()
+        sensor = SecurityProcessing()
+        leftSideCamera = LeftSideCamera()
+        rightSideCamera = RightSideCamera()
         time.sleep(3)
         while(True):
             self.frameCount += 1
+            wholeScreen = ImageGrab.grab((self.x, self.y, self.w, self.h))
             if self.camera == "MainCamera":
-                img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                mainCamera = MainCamera(np.array(img))
+                mainCamera = MainCamera(np.array(wholeScreen))
                 self.forward, self.left, self.right = mainCamera.capturingFunction()
             elif self.camera == "SideCamera":
-                #img = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                
-                wholeScreen = ImageGrab.grab((self.x, self.y, self.w, self.h))
-                leftLineImg = wholeScreen.crop((0, 0, wholeScreen.size[0] / 4, wholeScreen.size[1] / 4))
-                sideCamera = LeftSideCamera(np.array(leftLineImg))
-                self.forward, self.left, self.right,self.errorLeft, self.Left_avgY = sideCamera.capturingFunction()
+                leftLineImg = wholeScreen.crop((0, 0, wholeScreen.size[0] * 0.25, wholeScreen.size[1] * 0.25))
+                self.forward, self.left, self.right,self.errorLeft, self.Left_avgY = leftSideCamera.capturingFunction(np.array(leftLineImg))
                 #bu verilerle asagıdakiler çakışıyor(rightSideCamera'nın fonksiyonundan atanan degerler, 4 satır aşağısı) o yüzden bunları değişkende tutacagız
                 t_forward, t_left, t_right = self.forward, self.left, self.right
-                #img1 = ImageGrab.grab((self.xR, self.yR, self.wR, self.hR))
-                rightLineImg = wholeScreen.crop((3 * (wholeScreen.size[0]) / 4, 0, wholeScreen.size[0], wholeScreen.size[1] / 4))
-                rightSideCamera = RightSideCamera(np.array(rightLineImg))
-                self.forward, self.left, self.right, self.errorRight, self.Right_avgY = rightSideCamera.capturingFunction()
+                rightLineImg = wholeScreen.crop((wholeScreen.size[0] * 0.75, 0, wholeScreen.size[0], wholeScreen.size[1] * 0.25))
+                self.forward, self.left, self.right, self.errorRight, self.Right_avgY = rightSideCamera.capturingFunction(np.array(rightLineImg))
                 
-                signsImg = wholeScreen.crop((13 * (wholeScreen.size[0]) / 100, 29 * (wholeScreen.size[1]) / 100, 89 * (wholeScreen.size[0]) / 100, 95 * (wholeScreen.size[1]) / 100))
+                signsImg = wholeScreen.crop((wholeScreen.size[0] * 0.13, wholeScreen.size[1] * 0.29, wholeScreen.size[0] * 0.89, wholeScreen.size[1] * 0.95))
                 signsImg = np.array(signsImg)
                 points = self.gettingTrafficSignsUICoordinates(signsImg)
+
+                sensorImg = wholeScreen.crop((wholeScreen.size[0] * 0.5, 0, wholeScreen.size[0] * 0.67, wholeScreen.size[1] * 0.24))
+                sensorPoints = sensor.processFunc(np.array(sensorImg))
+                print(sensorPoints)
 
                 if self.errorLeft is False:
                     self.leftLaneCheck[self.frameCount%3] = 1
@@ -290,6 +256,8 @@ class SimulationProcessing:
                     #freezing işlemi gelecek buraya
                     self.activity = "Brake"
                     self.brake = True
+
+
 
             if self.camera is "MainCamera":
                 self.throttleActive(keyboard)
