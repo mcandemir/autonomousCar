@@ -82,8 +82,6 @@ class SimulationProcessing:
         self.w = int(mouse_posX2)
         self.h = int(mouse_posY2)
 
-            
-
     def simulationFunction(self):
         self.set_pos()
         trafficSign = TrafficSign()
