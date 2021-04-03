@@ -14,7 +14,7 @@ Here some screenshots which are taken from code;
 Also these are some images from Real-Time Tests;
 
 
-![#1](https://github.com/AlperenCicek/autonomousCar/blob/main/RealTimeImages/Sample1.png)
-![#2](https://github.com/AlperenCicek/autonomousCar/blob/main/RealTimeImages/Sample2.gif)
-![#3](https://github.com/AlperenCicek/autonomousCar/blob/main/RealTimeImages/Sample3.jpeg)
-![#4](https://github.com/AlperenCicek/autonomousCar/blob/main/RealTimeImages/Sample4.jpeg)
+![#1](https://github.com/AlperenCicek/autonomousCar/blob/master/RealTimeImages/Sample1.png)
+![#2](https://github.com/AlperenCicek/autonomousCar/blob/master/RealTimeImages/Sample2.gif)
+![#3](https://github.com/AlperenCicek/autonomousCar/blob/master/RealTimeImages/Sample3.jpeg)
+![#4](https://github.com/AlperenCicek/autonomousCar/blob/master/RealTimeImages/Sample4.jpeg)
