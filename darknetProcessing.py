@@ -47,7 +47,7 @@ class DarknetProcessing:
                             help="path to config file")
         parser.add_argument("--data_file", default="./data/yolov4-tiny.data",
                             help="path to data file")
-        parser.add_argument("--thresh", type=float, default=.80,
+        parser.add_argument("--thresh", type=float, default=.70,
                             help="remove detections with lower confidence")
         return parser.parse_args()
 
@@ -253,16 +253,92 @@ class DarknetProcessing:
         if self.args.save_labels:
             self.save_annotations(image_name, image, detections, class_names)
         darknet.print_detections(detections, self.args.ext_output)
-        print(detections)
+        #print(detections)
         #return detections
         if detections != []:
             for x in detections:
-                if x[0] == "ileriSol":
+                if x[0] == "park":
+                    self.trafficSign.trafficSignArray[0] = 1
+                else:
+                    self.trafficSign.trafficSignArray[0] = 0
+                if x[0] == "parkYasak":
+                    self.trafficSign.trafficSignArray[1] = 1
+                else:
+                    self.trafficSign.trafficSignArray[1] = 0
+                if x[0] == "durak":
                     self.trafficSign.trafficSignArray[2] = 1
-                    #cv2.imshow("ileriSol", image[int(x[2][3]):int(x[2][0]), int(x[2][2]):int(x[2][1])])
+                else:
+                    self.trafficSign.trafficSignArray[2] = 0
+                if x[0] == "sol":
+                    self.trafficSign.trafficSignArray[3] = 1
+                else:
+                    self.trafficSign.trafficSignArray[3] = 0
+                if x[0] == "sag":
+                    self.trafficSign.trafficSignArray[4] = 1
+                else:
+                    self.trafficSign.trafficSignArray[4] = 0
+                if x[0] == "solaDonulmez":
+                    self.trafficSign.trafficSignArray[5] = 1
+                else:
+                    self.trafficSign.trafficSignArray[5] = 0
+                if x[0] == "sagaDonulmez":
+                    self.trafficSign.trafficSignArray[6] = 1
+                else:
+                    self.trafficSign.trafficSignArray[6] = 0
+                if x[0] == "ileriSol":
+                    self.trafficSign.trafficSignArray[7] = 1
+                else:
+                    self.trafficSign.trafficSignArray[7] = 0
+                if x[0] == "ileriSag":
+                    self.trafficSign.trafficSignArray[8] = 1
+                else:
+                    self.trafficSign.trafficSignArray[8] = 0
+                if x[0] == "dur":
+                    self.trafficSign.trafficSignArray[9] = 1
+                else:
+                    self.trafficSign.trafficSignArray[9] = 0
+                if x[0] == "30":
+                    self.trafficSign.trafficSignArray[10] = 1
+                else:
+                    self.trafficSign.trafficSignArray[10] = 0
+                if x[0] == "20":
+                    self.trafficSign.trafficSignArray[11] = 1
+                else:
+                    self.trafficSign.trafficSignArray[11] = 0
+                if x[0] == "yesil":
+                    self.trafficSign.trafficSignArray[12] = 1
+                if x[0] == "kirmizi":
+                    self.trafficSign.trafficSignArray[12] = 0
+                if x[0] == "girisYok":
+                    self.trafficSign.trafficSignArray[13] = 1
+                else:
+                    self.trafficSign.trafficSignArray[13] = 0
+                if x[0] == "tasitTrafigineKapali":
+                    self.trafficSign.trafficSignArray[14] = 1
+                else:
+                    self.trafficSign.trafficSignArray[14] = 0
         else:
+            self.trafficSign.trafficSignArray[0] = 0
+            self.trafficSign.trafficSignArray[1] = 0
             self.trafficSign.trafficSignArray[2] = 0
+            self.trafficSign.trafficSignArray[3] = 0
+            self.trafficSign.trafficSignArray[4] = 0
+            self.trafficSign.trafficSignArray[5] = 0
+            self.trafficSign.trafficSignArray[6] = 0
+            self.trafficSign.trafficSignArray[7] = 0
+            self.trafficSign.trafficSignArray[8] = 0
+            self.trafficSign.trafficSignArray[9] = 0
+            self.trafficSign.trafficSignArray[10] = 0
+            self.trafficSign.trafficSignArray[11] = 0
+            self.trafficSign.trafficSignArray[12] = -1
+            self.trafficSign.trafficSignArray[13] = 0
+            self.trafficSign.trafficSignArray[14] = 0
+
+                    #cv2.imshow("ileriSol", image[int(x[2][3]):int(x[2][0]), int(x[2][2]):int(x[2][1])])
+                    #cv2.imshow("ileriSol", image[int(x[2][3]):int(x[2][0]), int(x[2][2]):int(x[2][1])])
         self.trafficSign.printingAllSigns()
+        if not self.args.dont_show:
+            cv2.imshow('Inference', image)
 
         
 
