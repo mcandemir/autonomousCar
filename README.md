@@ -1,6 +1,10 @@
 # autonomousCar
 The project which has been writing for Teknofest "Robotaxi-Full Scale Autonomous Vehicle" Competition. Python and OpenCV Library have been using on this project.
 
+You can watch simulation video in this link!:
+
+https://www.youtube.com/watch?v=FTLTN_zP0Js&t=2s
+
 These are protected files for importance of project: 
 imageProcessing.py
 leftSideCamera.py
